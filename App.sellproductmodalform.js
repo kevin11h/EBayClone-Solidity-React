@@ -11,8 +11,8 @@ class App extends Component {
     super(props, context);
     this.web3 = new Web3(window.web3.currentProvider);
 
-    const address = ''; // copied from console log of 'node deploy.js' 0x...
-    const abi = '  ';// copy from console log of 'node deploy.js'  [{"constant":..., "inputs":[], "name":...}];
+    const address = '0xF4c1801B5EF9D02E3CB0B91B728eF24Bfb7b77C7'; // copied from console log of 'node deploy.js' 0x...
+    const abi = [{"constant":true,"inputs":[],"name":"getNumberOfProducts","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"products","outputs":[{"name":"id","type":"uint256"},{"name":"seller","type":"address"},{"name":"buyer","type":"address"},{"name":"name","type":"string"},{"name":"description","type":"string"},{"name":"price","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_name","type":"string"},{"name":"_description","type":"string"},{"name":"_price","type":"uint256"}],"name":"sellProduct","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_id","type":"uint256"}],"name":"buyProduct","outputs":[],"payable":true,"stateMutability":"payable","type":"function"}];// copy from console log of 'node deploy.js'  [{"constant":..., "inputs":[], "name":...}];
     this.eBayClone = new this.web3.eth.Contract(abi, address);
     
     this.handleShow = this.handleShow.bind(this);
@@ -25,7 +25,7 @@ class App extends Component {
   state = {
     user:'',
     balance:'',
-    show:false
+    show:false,
     productName: '',
     productDescription: '',
     productPrice: '',
@@ -33,12 +33,12 @@ class App extends Component {
   };
 
   handleProductNameChange(e) {
-    this.setSate({ productName: e.target.value });
+    this.setState({ productName: e.target.value });
   }
   handleProductDescChange(e) {
     this.setState({ productDescription: e.target.value });
   }
-
+    
   handleProductPriceChange(e) {
     this.setState({ productPrice: e.target.value });
   }
@@ -60,10 +60,10 @@ class App extends Component {
 
   handleSell = async (event) => {
     event.preventDefault();
-    this.setState({message: "waiting on sell trasnaction success.."});
+    this.setState({message: "waiting on sell trasaction success.."});
     this.handleClose();
     await this.eBayClone.methods.sellProduct(this.state.productName,
-      this.sate.productDescription,
+      this.state.productDescription,
       this.web3.utils.toWei(this.state.productPrice, 'ether'))
       .send({
         from:this.state.user,
@@ -75,11 +75,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.refereshContractDetails();
+    this.refreshContractDetails();
   }
 
   async refreshContractDetails() {
-     const account = await this.web3.eth.getAccounts();
+     const accounts = await this.web3.eth.getAccounts();
      const user = accounts[0];
      const balance = this.web3.utils.fromWei(await this.web3.eth.getBalance(user), 'ether');
 
@@ -130,15 +130,15 @@ class App extends Component {
                            placeholder="Enter the name of your product"
                            onChange={this.handleProductNameChange} />
 
-              <ControlLabel>Price in ETH</ControlLabel>
+              <ControlLabel>"Price in ETH"</ControlLabel>
               <FormControl type="number"
                            value={this.state.productPrice}
                            placeholer="1"
-                           onChange={this.handleProductPriceCHange}
+                           onChange={this.handleProductPriceChange}
               />
               <ControlLabel>Description</ControlLabel>
               <FormControl type="text"
-                           value="{this.state.productDescription}
+                           value={this.state.productDescription}
                            placeholder="Describe your article"
                            onChange={this.handleProductDescChange}
               />
@@ -156,3 +156,5 @@ class App extends Component {
     );
   }
 }
+
+export default App;
