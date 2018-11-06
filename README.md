@@ -31,7 +31,9 @@ https://github.com/greglim81/solidity-chapter6
 `npm install --save react-bootstrap`
 
 `npm install --save truffle-hdwallet-provider`
+
 `npm install --save mocha ganache-cli web3@1.0.0-beta.34`
+
 `npm install --save solc`
  
 # UI Links for React
