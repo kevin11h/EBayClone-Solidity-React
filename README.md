@@ -42,3 +42,7 @@ https://react-bootstrap.github.io/getting-started/introduction  (stylesheet link
 + https://react-bootstrap.github.io/components/forms/
 
 + https://react-bootstrap.github.io/components/modal (popup product Modal component form)
+
+# Update Stylesheet from React Bootstrap in `public/index.html`
+
+`<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstra.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">`
